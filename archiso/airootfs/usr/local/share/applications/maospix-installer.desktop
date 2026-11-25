@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Instalar MAOSPIX-COSMIC
+GenericName=Instalador del sistema
+Comment=Instalar MAOSPIX-COSMIC en el disco
+Exec=/usr/local/bin/maospix-installer
+Icon=/etc/calamares/branding/maospix-cosmic/icon.png
+Terminal=false
+Categories=System;
+Keywords=instalar;install;calamares;maospix;
+StartupWMClass=calamares

@@ -1,0 +1,13 @@
+# MAOSPIX-COSMIC: vuelve a poner el nombre de la distro cuando una
+# actualización del paquete filesystem reescribe /usr/lib/os-release.
+[Trigger]
+Type = Path
+Operation = Install
+Operation = Upgrade
+Target = usr/lib/os-release
+Target = usr/share/maospix-cosmic/os-release
+
+[Action]
+Description = Aplicando la identidad de MAOSPIX-COSMIC (os-release)...
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/maospix-os-release

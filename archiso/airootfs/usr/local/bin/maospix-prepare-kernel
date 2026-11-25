@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+kernel_image="$(find /usr/lib/modules -mindepth 2 -maxdepth 2 -type f -name vmlinuz -print -quit)"
+
+if [[ -z "$kernel_image" || ! -r "$kernel_image" ]]; then
+    printf 'ERROR: no se encontró un kernel legible en /usr/lib/modules.\n' >&2
+    exit 1
+fi
+
+install -Dm644 "$kernel_image" /boot/vmlinuz-linux
+test -r /boot/vmlinuz-linux
+printf 'Kernel preparado: %s -> /boot/vmlinuz-linux\n' "$kernel_image"
+
+# Este auxiliar solo pertenece al entorno de instalación.
+rm -f -- "$0"

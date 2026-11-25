@@ -1,0 +1,15 @@
+pkgname=maospix-plymouth-theme
+pkgver=0.1.0
+pkgrel=1
+pkgdesc='Pantalla de arranque MAOSPIX para Plymouth'
+arch=(any)
+url='https://github.com/maospix/maospix-niri'
+license=('GPL-3.0-only' 'GPL-2.0-or-later')
+depends=(plymouth)
+install=maospix-plymouth-theme.install
+
+package() {
+    # Imágenes del spinner tomadas del tema "spinner" de Plymouth (GPL-2.0-or-later);
+    # watermark.png es el escudo MAOSPIX.
+    cp -a "$startdir/rootfs/." "$pkgdir/"
+}

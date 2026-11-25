@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Corre DENTRO del sistema instalado al final, después de GRUB.
+set -uo pipefail
+
+# Llavero de pacman listo desde el primer arranque (falló en la v1:
+# Flatpak pedía "pacman-key --init").
+rm -rf /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
+# gpg-agent queda vivo dentro del chroot y puede impedir desmontar el disco.
+gpgconf --homedir /etc/pacman.d/gnupg --kill all 2>/dev/null || true
+
+# Btrfs: snapshots con snapper y entradas en GRUB (igual que maospix-kde).
+if [[ "$(findmnt -no FSTYPE /)" == btrfs ]]; then
+    snapper --no-dbus -c root create-config / || true
+    snapper --no-dbus -c root set-config TIMELINE_CREATE=no \
+        NUMBER_LIMIT=8 NUMBER_LIMIT_IMPORTANT=4 || true
+    systemctl enable snapper-cleanup.timer grub-btrfsd.service || true
+else
+    # Sin Btrfs no hay snapshots: snap-pac solo daría avisos.
+    pacman -Rns --noconfirm snap-pac grub-btrfs 2>/dev/null || true
+fi
+
+grub-mkconfig -o /boot/grub/grub.cfg
+rm -f -- "$0"
+exit 0

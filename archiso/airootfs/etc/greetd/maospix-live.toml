@@ -1,0 +1,15 @@
+# MAOSPIX-COSMIC live: entra directo a COSMIC como liveuser (una vez por
+# arranque); al cerrar sesión aparece el greeter normal de COSMIC.
+[terminal]
+vt = "1"
+
+[general]
+service = "login"
+
+[initial_session]
+command = "start-cosmic"
+user = "liveuser"
+
+[default_session]
+command = "cosmic-greeter-start"
+user = "cosmic-greeter"

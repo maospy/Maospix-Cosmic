@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Corre DENTRO del sistema instalado (chroot), nunca en la live.
+# Quita todo lo exclusivo de ArchISO y de la sesión live de MAOSPIX.
+set -euo pipefail
+
+rm -f /etc/mkinitcpio.conf.d/archiso.conf
+rm -f /etc/sudoers.d/g_wheel /etc/sudoers.d/10-maospix-live
+rm -rf /etc/systemd/system/getty@tty1.service.d
+rm -f /etc/systemd/resolved.conf.d/archiso.conf
+rm -f /etc/systemd/logind.conf.d/do-not-suspend.conf
+rm -f /etc/systemd/journald.conf.d/volatile-storage.conf
+rm -f /etc/ssh/sshd_config.d/10-archiso.conf
+rm -f /etc/pacman.d/hooks/uncomment-mirrors.hook
+rm -f /etc/pacman.d/hooks/zzzz99-remove-custom-hooks-from-airootfs.hook
+rm -f /etc/systemd/system/{choose-mirror,pacman-init,livecd-talk,livecd-alsa-unmuter}.service
+rm -f /etc/systemd/system/etc-pacman.d-gnupg.mount
+rm -f /etc/systemd/system/systemd-networkd-wait-online.service.d/*.conf
+rm -rf /etc/systemd/system/cloud-init.target.wants /var/lib/cloud
+rm -f /root/.automated_script.sh /root/.zlogin /root/customize_airootfs.sh
+rm -f /etc/motd
+rm -f /usr/local/bin/{choose-mirror,Installation_guide,livecd-sound}
+rm -rf /usr/local/share/livecd-sound
+
+# Sesión live de MAOSPIX: autologin de cosmic-greeter y creación de liveuser.
+rm -f /etc/greetd/maospix-live.toml
+rm -rf /etc/systemd/system/cosmic-greeter.service.d
+rm -f /etc/systemd/system/maospix-live-user.service
+rm -f /usr/local/bin/maospix-live-user
+
+# Enlaces rotos que dejaron los servicios borrados.
+find /etc/systemd/system -xtype l -delete
+
+# El instalador no queda en el sistema instalado.
+rm -rf /etc/calamares
+rm -f /usr/local/bin/{maospix-installer,maospix-resolve-airootfs}
+rm -f /usr/local/share/applications/{maospix-installer,calamares}.desktop
+rm -f -- "$0"

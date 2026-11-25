@@ -1,0 +1,11 @@
+NAME="MAOSPIX-COSMIC"
+PRETTY_NAME="MAOSPIX-COSMIC"
+ID=maospix-cosmic
+ID_LIKE=arch
+BUILD_ID=rolling
+ANSI_COLOR="38;2;34;211;238"
+HOME_URL="https://github.com/maospy"
+DOCUMENTATION_URL="https://wiki.archlinux.org/"
+SUPPORT_URL="https://github.com/maospy"
+BUG_REPORT_URL="https://github.com/maospy"
+LOGO=archlinux-logo

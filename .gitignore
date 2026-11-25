@@ -1,0 +1,16 @@
+out/
+work/
+*.log
+build/
+repo/
+*.pkg.tar.zst
+packages/*/pkg/
+packages/*/src/
+
+# Fotos de las pruebas: pueden mostrar datos personales
+docs/pruebas/
+
+# Fuentes descargadas por makepkg
+packages/*/*.tar.*
+packages/*/*.zip
+packages/*/*.deb

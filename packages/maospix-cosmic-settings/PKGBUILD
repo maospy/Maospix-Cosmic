@@ -1,0 +1,16 @@
+# Maintainer: maospy
+pkgname=maospix-cosmic-settings
+pkgver=0.5.0
+pkgrel=1
+pkgdesc='Valores predeterminados e identidad de MAOSPIX-COSMIC'
+arch=('any')
+url='https://github.com/maospy'
+license=('GPL-3.0-or-later')
+depends=(cosmic-session cosmic-greeter kitty fish fastfetch loupe)
+install=maospix-cosmic-settings.install
+
+package() {
+    cp -a "$startdir/rootfs/." "$pkgdir/"
+    chmod 755 "$pkgdir/usr/share/libalpm/scripts/maospix-os-release"
+    chmod 755 "$pkgdir/usr/local/bin/kitty"
+}

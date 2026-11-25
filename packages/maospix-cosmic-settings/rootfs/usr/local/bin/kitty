@@ -1,0 +1,7 @@
+#!/bin/sh
+# MAOSPIX: en VirtualBox con aceleración 3D kitty abre una ventana vacía.
+# Solo ahí se dibuja por software; en hardware real no cambia nada.
+if [ "$(systemd-detect-virt 2>/dev/null)" = "oracle" ]; then
+    export LIBGL_ALWAYS_SOFTWARE=1
+fi
+exec /usr/bin/kitty "$@"

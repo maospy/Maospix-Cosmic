@@ -1,0 +1,6 @@
+#!/bin/sh
+# MAOSPIX-COSMIC: el paquete filesystem de Arch trae /usr/lib/os-release con
+# "Arch Linux"; se reemplaza por la identidad de MAOSPIX-COSMIC (ID_LIKE=arch).
+src=/usr/share/maospix-cosmic/os-release
+[ -r "$src" ] || exit 0
+cmp -s "$src" /usr/lib/os-release || install -m644 "$src" /usr/lib/os-release

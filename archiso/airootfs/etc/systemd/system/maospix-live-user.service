@@ -1,0 +1,8 @@
+[Unit]
+Description=Prepare the MAOSPIX live user
+Before=cosmic-greeter.service display-manager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/maospix-live-user
+RemainAfterExit=yes

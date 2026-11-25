@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! getent group liveuser >/dev/null; then
+    groupadd --gid 1000 liveuser
+fi
+
+if ! id liveuser >/dev/null 2>&1; then
+    useradd --uid 1000 --gid liveuser --groups wheel \
+        --create-home --skel /etc/skel --shell /usr/bin/fish liveuser
+fi
+
+passwd --delete liveuser >/dev/null
+install -d -o liveuser -g liveuser -m 0700 /home/liveuser
+# Solo en la live: el instalador primero en el dock de COSMIC.
+fav=/home/liveuser/.config/cosmic/com.system76.CosmicAppList/v1/favorites
+if [[ -f "$fav" ]] && ! grep -q maospix-installer "$fav"; then
+    sed -i '0,/\[/s//[\n    "maospix-installer",/' "$fav"
+fi
+
+chown -R liveuser:liveuser /home/liveuser

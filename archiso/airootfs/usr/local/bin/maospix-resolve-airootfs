@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+stable_path="/run/maospix-airootfs.sfs"
+
+candidates=(
+    "/run/archiso/bootmnt/arch/x86_64/airootfs.sfs"
+    "/run/archiso/copytoram/airootfs.sfs"
+)
+
+for source_image in "${candidates[@]}"; do
+    if [[ -r "$source_image" ]]; then
+        ln -sfn "$source_image" "$stable_path"
+        printf 'Imagen Live localizada: %s -> %s\n' "$stable_path" "$source_image"
+        exit 0
+    fi
+done
+
+# Compatibilidad adicional con cargadores que conserven la imagen en otra
+# ubicación debajo de /run/archiso.
+source_image="$(find /run/archiso -maxdepth 6 -type f -name airootfs.sfs -print -quit 2>/dev/null || true)"
+if [[ -n "$source_image" && -r "$source_image" ]]; then
+    ln -sfn "$source_image" "$stable_path"
+    printf 'Imagen Live localizada por búsqueda: %s -> %s\n' "$stable_path" "$source_image"
+    exit 0
+fi
+
+printf 'ERROR: no se encontró una imagen airootfs.sfs legible debajo de /run/archiso.\n' >&2
+find /run/archiso -maxdepth 4 -type f -print 2>/dev/null >&2 || true
+exit 1
