@@ -10,8 +10,9 @@ Parte de la familia maospix.
 
 ## Descargar
 
-La ISO (3,7 GB) se publicará en SourceForge; el enlace va a estar acá.
-Después de bajarla, verificá el checksum:
+Descargá la ISO (3,7 GB) desde
+[SourceForge](https://sourceforge.net/projects/maospix-cosmic/files/maospix-cosmic-2026.11.25-x86_64.iso/download)
+y verificá el checksum:
 
 ```
 sha256sum maospix-cosmic-2026.11.25-x86_64.iso
